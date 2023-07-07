@@ -35,60 +35,57 @@ We select some important files for detailed description.
 |-- textClassification.py # 定义了一个文本分类模型TextModel，使用BERT作为主干网络，通过训练、测试和预测函数对模型进行训练、测试和预测
 ```
 
-## Run pipeline for big-scale datasets
-1. Entering the large-scale directory and download 6 big-scale datasets from the repository of [LINKX](https://github.com/CUAI/Non-Homophily-Large-Scale). Notice, you should rename the datasets and place them in the right directory.
-```python
-cd large-scale
+## Run 
+
+常规实验
+
+1. 训练，并在训练中进行验证数据的指标计算：
+```powershell
+python run.py –train –test –mode img_and_text
 ```
 
-2. You can run any models implemented in 'models.py'. For examples, you can run our model on 'genius' dataset by the script:
-```python
-python main.py --dataset genius --sub_dataset None --method mlpnorm
+2. 训练好的模型对无标签的测试数据进行预测：
+```powershell
+python run.py  --predict --mode img_and_text --prediction_path result/img_and_text/prediction.txt
 ```
-And you can run other models, such as 
-```python
-python main.py --dataset genius --sub_dataset None --method acmgcn
-```
-For more experiments running details, you can ref the running sh in the 'experiments/' directory.
+消融实验
 
-3. You can reproduce the experimental results of our method by running the scripts:
+只进行图像的情感分类：
+
+3. 训练
+
+```powershell
+python run.py --train --test --mode img_only --cache_model_path cache/img_only_model
+```
+4. 训练好的模型对无标签的测试数据进行预测：
+
 ```python
 bash run_glognn_sota_reproduce_big.sh
 bash run_glognn++_sota_reproduce_big.sh
 ```
 
+只进行文本的情感分类：
 
+5. 训练
 
-## Run pipeline for small-scale datasets
-1. Entering the large-scale directory and we provide the original datasets with their splits.
-```python
-cd small-scale
+```powershell
+python run.py --train --test --mode text_only --cache_model_path cache/text_only_model
 ```
 
-2. You can run our model like the script in the below:
-```python
-python main.py --no-cuda --model mlp_norm --dataset chameleon --split 0
+6. 训练好的模型对无标签的测试数据进行预测：
+
+```powershell
+python run.py --mode text_only --predict --prediction_path result/text_only/prediction.txt --cache_model_path cache/text_only_model
 ```
-Notice, we run all small-scale datasets on CPUs.
-For more experiments running details, you can ref the running sh in the 'sh/' directory.
 
 
-3. You can reproduce the experimental results of our method by running the scripts:
-```python
-bash run_glognn_sota_reproduce_small.sh
-bash run_glognn++_sota_reproduce_small.sh
-```
 
 
 ## Attribution
 
 Parts of this code are based on the following repositories:
 
-- [LINKX](https://github.com/CUAI/Non-Homophily-Large-Scale)
-
-- [PYGCN](https://github.com/tkipf/pygcn)
-
-- [WRGAT](https://github.com/susheels/gnns-and-local-assortativity/tree/main/struc_sim)
+- NAN
 
 
 ## Citation
@@ -96,10 +93,9 @@ Parts of this code are based on the following repositories:
 If you find this code working for you, please cite:
 
 ```python
-@article{li2022finding,
-  title={Finding Global Homophily in Graph Neural Networks When Meeting Heterophily},
-  author={Li, Xiang and Zhu, Renyu and Cheng, Yao and Shan, Caihua and Luo, Siqiang and Li, Dongsheng and Qian, Weining},
-  journal={arXiv preprint arXiv:2205.07308},
-  year={2022}
+@article{
+    NAN
+  author={liao},
+  year={2023}
 }
 ```
